@@ -1,0 +1,1709 @@
+<!-- Output: html -->
+<!-- Filename: 白鳥サラ_オフィシャルサイト -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="白鳥サラのオフィシャルサイト。ニュース、ディスコグラフィ、ライブ、メディア情報。"
+  >
+  <meta name="theme-color" content="#f8fafb">
+  <title>白鳥サラ | Official Website</title>
+
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f8fafb;
+      --paper: #ffffff;
+      --text: #24343d;
+      --muted: #73828c;
+      --accent: #507f98;
+      --line: #dfe7eb;
+      --soft: #edf3f6;
+      --width: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Helvetica Neue",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        sans-serif;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button,
+    a,
+    summary {
+      touch-action: manipulation;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    img,
+    video {
+      display: block;
+      width: 100%;
+    }
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 5px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 100;
+      padding: 12px 18px;
+      background: var(--paper);
+      transform: translateY(-160%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .container {
+      width: min(var(--width), calc(100% - 80px));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-inner {
+      min-height: 108px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .brand {
+      display: inline-flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: 23px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+    }
+
+    .brand-caption {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+    }
+
+    .navigation {
+      display: flex;
+      gap: 30px;
+    }
+
+    .navigation a {
+      position: relative;
+      padding-block: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.09em;
+    }
+
+    .navigation a::after {
+      position: absolute;
+      right: 0;
+      bottom: 2px;
+      left: 0;
+      height: 1px;
+      background: var(--accent);
+      content: "";
+      transform: scaleX(0);
+      transition: transform 180ms ease;
+    }
+
+    .navigation a:hover,
+    .navigation a[aria-current="page"] {
+      color: var(--text);
+    }
+
+    .navigation a[aria-current="page"]::after {
+      transform: scaleX(1);
+    }
+
+    main {
+      min-height: 65vh;
+    }
+
+    .page {
+      padding-block: 66px 100px;
+    }
+
+    .home-page {
+      padding-top: 32px;
+    }
+
+    .section-heading {
+      margin-bottom: 36px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.23em;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      overflow-wrap: anywhere;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-weight: 500;
+    }
+
+    .section-heading h1,
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(25px, 3vw, 34px);
+      letter-spacing: 0.04em;
+    }
+
+    .section-description {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* メイン：画像・動画を共通の3:2フレームに表示 */
+    .hero-frame {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3 / 2;
+      isolation: isolate;
+      background: var(--soft);
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      visibility: hidden;
+      opacity: 0;
+      transition:
+        opacity 650ms ease,
+        visibility 650ms;
+    }
+
+    .hero-slide.is-active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .hero-slide img,
+    .hero-slide video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-slide::after {
+      position: absolute;
+      inset: 35% 0 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgb(15 30 40 / 64%)
+      );
+      content: "";
+    }
+
+    .hero-copy {
+      position: absolute;
+      right: 42px;
+      bottom: 42px;
+      left: 42px;
+      z-index: 2;
+      color: #ffffff;
+    }
+
+    .hero-copy .eyebrow {
+      color: #e1edf2;
+    }
+
+    .hero-copy h2 {
+      margin: 0 0 12px;
+      font-size: clamp(25px, 4vw, 47px);
+      line-height: 1.5;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-copy a {
+      display: inline-block;
+      border-bottom: 1px solid rgb(255 255 255 / 55%);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 18px;
+    }
+
+    .slider-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .slider-dot {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .slider-dot::before {
+      width: 24px;
+      height: 2px;
+      background: #ced9df;
+      content: "";
+    }
+
+    .slider-dot[aria-current="true"]::before {
+      background: var(--accent);
+    }
+
+    .slider-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-button {
+      min-width: 42px;
+      min-height: 42px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      background: transparent;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .control-button:hover {
+      background: var(--soft);
+    }
+
+    .home-intro {
+      margin-block: 48px 76px;
+      text-align: center;
+    }
+
+    .home-intro h1 {
+      margin: 0 0 12px;
+      font-size: clamp(21px, 3vw, 30px);
+      letter-spacing: 0.13em;
+    }
+
+    .home-intro p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .news-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .news-item {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .news-item summary {
+      display: grid;
+      grid-template-columns: 110px 1fr 20px;
+      align-items: baseline;
+      gap: 22px;
+      padding: 25px 0;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .news-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .news-item summary::after {
+      content: "+";
+      text-align: right;
+    }
+
+    .news-item[open] summary::after {
+      content: "−";
+    }
+
+    .news-category {
+      color: var(--accent);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+    }
+
+    .news-title {
+      font-size: 14px;
+    }
+
+    .news-body {
+      padding: 0 42px 26px 132px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .news-body p {
+      margin-top: 0;
+    }
+
+    .text-link {
+      display: inline-block;
+      border-bottom: 1px solid var(--line);
+      color: var(--accent);
+      font-size: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 42px 28px;
+    }
+
+    .disc-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      min-width: 0;
+    }
+
+    .card-meta {
+      margin: 18px 0 5px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .card-caption {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .image-frame {
+      overflow: hidden;
+      aspect-ratio: 3 / 2;
+      background: var(--soft);
+    }
+
+    /* ジャケットは1:1。プレビュー内の3枚はそれぞれ3:2。 */
+    .disc-visual {
+      position: relative;
+      aspect-ratio: 1;
+      background: var(--soft);
+    }
+
+    .disc-jacket {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .preview-button {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      z-index: 3;
+      min-height: 42px;
+      padding: 8px 15px;
+      border: 1px solid rgb(255 255 255 / 70%);
+      background: rgb(255 255 255 / 94%);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+    }
+
+    .mv-preview {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-content: center;
+      gap: 10px;
+      padding: 24px 24px 70px;
+      pointer-events: none;
+      background: rgb(248 250 251 / 97%);
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        opacity 200ms ease,
+        visibility 200ms;
+    }
+
+    .mv-preview figure {
+      margin: 0;
+      overflow: hidden;
+      aspect-ratio: 3 / 2;
+    }
+
+    .mv-preview figure:last-child {
+      grid-column: 1 / -1;
+      width: calc((100% - 10px) / 2);
+      justify-self: center;
+    }
+
+    .disc-card[data-open="true"] .mv-preview {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .media-link .image-frame img {
+      transition: transform 400ms ease;
+    }
+
+    @media (hover: hover) {
+      .media-link:hover .image-frame img {
+        transform: scale(1.035);
+      }
+    }
+
+    .detail-layout {
+      max-width: 900px;
+      margin-inline: auto;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 30px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .detail-heading {
+      margin-block: 34px 22px;
+    }
+
+    .detail-heading h1 {
+      margin: 0;
+      font-size: clamp(24px, 4vw, 36px);
+      line-height: 1.6;
+    }
+
+    .detail-description {
+      max-width: 660px;
+      color: var(--muted);
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .detail-facts {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      margin-top: 30px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .detail-facts dt,
+    .detail-facts dd {
+      margin: 0;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail-facts dt {
+      color: var(--muted);
+    }
+
+    .site-footer {
+      padding-block: 35px;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-name {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+    }
+
+    .site-footer small {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .noscript-message {
+      margin: 30px;
+      padding: 20px;
+      border: 1px solid var(--line);
+    }
+
+    @media (min-width: 1100px) {
+      .hero {
+        max-width: 1000px;
+        margin-inline: auto;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .container {
+        width: calc(100% - 40px);
+      }
+
+      .header-inner {
+        min-height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 17px;
+        padding-block: 24px 14px;
+      }
+
+      .navigation {
+        width: 100%;
+        gap: 24px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .navigation a {
+        flex-shrink: 0;
+        font-size: 11px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .page {
+        padding-block: 42px 70px;
+      }
+
+      .home-page {
+        padding-top: 20px;
+      }
+
+      .hero-copy {
+        right: 24px;
+        bottom: 24px;
+        left: 24px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .grid,
+      .disc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        right: 18px;
+        bottom: 18px;
+        left: 18px;
+      }
+
+      .hero-copy h2 {
+        margin-bottom: 6px;
+        font-size: 24px;
+      }
+
+      .hero-copy .eyebrow {
+        margin-bottom: 5px;
+        font-size: 9px;
+      }
+
+      .hero-copy a {
+        font-size: 10px;
+      }
+
+      .home-intro {
+        margin-block: 35px 55px;
+      }
+
+      .news-item summary {
+        grid-template-columns: 1fr 20px;
+        gap: 8px;
+        padding-block: 20px;
+      }
+
+      .news-category {
+        grid-column: 1 / -1;
+      }
+
+      .news-body {
+        padding: 0 20px 20px 0;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .slider-actions {
+        gap: 5px;
+      }
+
+      .control-button {
+        padding-inline: 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+    保存してブラウザで開くと動作する、ライブラリ不要の単一HTMLです。
+
+    ページ切替：
+    #home
+    #discography
+    #live
+    #media
+    #media/first-photobook
+
+    メディア詳細は独立したURL状態を持つ画面です。
+    ディスコグラフィに個別ページはありません。
+
+    画像・動画は下記のcontent内のパスを差し替えてください。
+    未配置の画像はプレースホルダーに切り替わります。
+    ライブ・メディア情報は制作見本であり、確定実績ではありません。
+
+    動画を使う場合：
+    slides内のvideoにMP4ファイルのパスを指定してください。
+    動画はミュートで再生し、非表示時には停止します。
+  -->
+
+  <a class="skip-link" href="#main-content">本文へ移動</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="白鳥サラ ホーム">
+        <span class="brand-name">白鳥サラ</span>
+        <span class="brand-caption">SARA SHIRATORI / OFFICIAL WEBSITE</span>
+      </a>
+
+      <nav class="navigation" aria-label="メインナビゲーション">
+        <a href="#home" data-nav="home">HOME</a>
+        <a href="#discography" data-nav="discography">DISCOGRAPHY</a>
+        <a href="#live" data-nav="live">LIVE</a>
+        <a href="#media" data-nav="media">MEDIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <section
+      id="page-home"
+      class="page home-page container"
+      data-page="home"
+      aria-labelledby="home-title"
+    >
+      <section
+        id="hero"
+        class="hero"
+        aria-label="ピックアップ"
+        aria-roledescription="カルーセル"
+      >
+        <div id="hero-frame" class="hero-frame"></div>
+
+        <div class="slider-controls">
+          <div
+            id="slider-dots"
+            class="slider-dots"
+            aria-label="スライドの選択"
+          ></div>
+
+          <div class="slider-actions">
+            <button
+              id="slide-prev"
+              class="control-button"
+              type="button"
+              aria-label="前のスライド"
+            >
+              ←
+            </button>
+            <button
+              id="slide-toggle"
+              class="control-button"
+              type="button"
+            >
+              自動再生を停止
+            </button>
+            <button
+              id="slide-next"
+              class="control-button"
+              type="button"
+              aria-label="次のスライド"
+            >
+              →
+            </button>
+          </div>
+        </div>
+
+        <p
+          id="slider-status"
+          class="sr-only"
+          aria-live="polite"
+          aria-atomic="true"
+        ></p>
+      </section>
+
+      <div class="home-intro">
+        <h1 id="home-title">わたしは、ひかる。</h1>
+        <p>一歩ずつ、その先のわたしへ。</p>
+      </div>
+
+      <section aria-labelledby="news-title">
+        <div class="section-heading">
+          <p class="eyebrow">LATEST INFORMATION</p>
+          <h2 id="news-title">News</h2>
+        </div>
+
+        <div class="news-list">
+          <details class="news-item">
+            <summary>
+              <span class="news-category">RELEASE</span>
+              <span class="news-title">
+                1stシングル『わたしは、ひかる。』
+              </span>
+            </summary>
+            <div class="news-body">
+              <p>
+                誰にも負けたくない。そのために、走り続ける。
+                八島修一プロデュースによる白鳥サラのデビュー曲。
+                発売日・配信情報は決まり次第お知らせします。
+              </p>
+              <a class="text-link" href="#discography">
+                ディスコグラフィへ →
+              </a>
+            </div>
+          </details>
+
+          <details class="news-item">
+            <summary>
+              <span class="news-category">LIVE</span>
+              <span class="news-title">ライブ情報について</span>
+            </summary>
+            <div class="news-body">
+              <p>
+                出演日程・会場・チケット情報は、
+                詳細が決まり次第こちらでお知らせします。
+              </p>
+            </div>
+          </details>
+
+          <details class="news-item">
+            <summary>
+              <span class="news-category">INFORMATION</span>
+              <span class="news-title">
+                白鳥サラ オフィシャルサイト
+              </span>
+            </summary>
+            <div class="news-body">
+              <p>
+                音楽、ライブ、メディア出演など、
+                白鳥サラの活動をお届けします。
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+    </section>
+
+    <section
+      id="page-discography"
+      class="page container"
+      data-page="discography"
+      aria-labelledby="discography-title"
+      hidden
+    >
+      <div class="section-heading">
+        <p class="eyebrow">MUSIC</p>
+        <h1 id="discography-title">Discography</h1>
+        <p class="section-description">
+          ジャケットにカーソルを重ねると、MVイメージが表示されます。
+          スマートフォンでは「MV PREVIEW」をタップしてください。
+        </p>
+      </div>
+      <div id="discography-grid" class="grid disc-grid"></div>
+    </section>
+
+    <section
+      id="page-live"
+      class="page container"
+      data-page="live"
+      aria-labelledby="live-title"
+      hidden
+    >
+      <div class="section-heading">
+        <p class="eyebrow">ON STAGE</p>
+        <h1 id="live-title">Live</h1>
+        <p class="section-description">
+          ライブアーカイブの掲載イメージ。公演情報・写真は準備中です。
+        </p>
+      </div>
+      <div id="live-grid" class="grid"></div>
+    </section>
+
+    <section
+      id="page-media"
+      class="page container"
+      data-page="media"
+      aria-labelledby="media-title"
+      hidden
+    >
+      <div class="section-heading">
+        <p class="eyebrow">BOOKS &amp; MAGAZINES</p>
+        <h1 id="media-title">Media</h1>
+        <p class="section-description">
+          写真集・雑誌掲載の紹介ページ。以下は制作見本です。
+        </p>
+      </div>
+      <div id="media-grid" class="grid"></div>
+    </section>
+
+    <section
+      id="page-media-detail"
+      class="page container"
+      data-page="media-detail"
+      aria-labelledby="detail-title"
+      hidden
+    >
+      <article class="detail-layout">
+        <a class="back-link" href="#media">← Media一覧へ</a>
+        <div id="detail-image" class="image-frame"></div>
+
+        <header class="detail-heading">
+          <p id="detail-category" class="eyebrow"></p>
+          <h1 id="detail-title"></h1>
+        </header>
+
+        <p id="detail-description" class="detail-description"></p>
+        <dl id="detail-facts" class="detail-facts"></dl>
+      </article>
+    </section>
+
+    <section
+      class="page container"
+      data-page="not-found"
+      aria-labelledby="not-found-title"
+      hidden
+    >
+      <div class="section-heading">
+        <p class="eyebrow">404</p>
+        <h1 id="not-found-title">ページが見つかりません</h1>
+      </div>
+      <a class="text-link" href="#home">ホームへ戻る →</a>
+    </section>
+  </main>
+
+  <noscript>
+    <p class="noscript-message">
+      スライド表示とページ切り替えにはJavaScriptが必要です。
+      ブラウザのJavaScriptを有効にしてください。
+    </p>
+  </noscript>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="footer-name">SARA SHIRATORI</span>
+      <small>© SARA SHIRATORI</small>
+    </div>
+  </footer>
+
+  <script>
+    "use strict";
+
+    // 画像の推奨サイズ：
+    // ジャケット：1600 × 1600
+    // MV・ライブ・メディア・スライド：1800 × 1200
+    const content = {
+      slides: [
+        {
+          category: "1ST SINGLE",
+          title: "わたしは、ひかる。",
+          image: "assets/images/hero-single.jpg",
+          video: "",
+          alt: "朝の光の中で一歩を踏み出す白鳥サラ",
+          href: "#discography",
+          linkText: "DISCOVER THE MUSIC"
+        },
+        {
+          category: "MUSIC VIDEO",
+          title: "この一歩から。",
+          image: "assets/images/hero-mv.jpg",
+          video: "",
+          alt: "わたしは、ひかる。のミュージックビデオイメージ",
+          href: "#discography",
+          linkText: "VIEW DISCOGRAPHY"
+        },
+        {
+          category: "LIVE ARCHIVE",
+          title: "ステージ、その瞬間。",
+          image: "assets/images/hero-live.jpg",
+          video: "",
+          alt: "白鳥サラのライブアーカイブ用イメージ",
+          href: "#live",
+          linkText: "VIEW LIVE"
+        }
+      ],
+
+      releases: [
+        {
+          id: "watashi-wa-hikaru",
+          title: "わたしは、ひかる。",
+          type: "1ST SINGLE",
+          jacket: "assets/images/single-01-jacket.jpg",
+          note: "Produced by Shuichi Yashima",
+          previews: [
+            {
+              src: "assets/images/single-01-mv-01.jpg",
+              alt: "MVイメージ1：夜明けの道を歩くサラ"
+            },
+            {
+              src: "assets/images/single-01-mv-02.jpg",
+              alt: "MVイメージ2：光の中で歌うサラ"
+            },
+            {
+              src: "assets/images/single-01-mv-03.jpg",
+              alt: "MVイメージ3：まっすぐ前を見つめるサラ"
+            }
+          ]
+        }
+      ],
+
+      // 以下のライブ名は仮置きです。実際の設定に合わせて変更します。
+      lives: [
+        {
+          title: "DEBUT SHOWCASE",
+          image: "assets/images/live-01.jpg",
+          alt: "デビューショーケースのライブ写真",
+          caption: "公演名・開催日・会場：未確定",
+          label: "SAMPLE / 01"
+        },
+        {
+          title: "ACOUSTIC SESSION",
+          image: "assets/images/live-02.jpg",
+          alt: "アコースティックライブの写真",
+          caption: "公演名・開催日・会場：未確定",
+          label: "SAMPLE / 02"
+        },
+        {
+          title: "SPECIAL STAGE",
+          image: "assets/images/live-03.jpg",
+          alt: "スペシャルステージのライブ写真",
+          caption: "公演名・開催日・会場：未確定",
+          label: "SAMPLE / 03"
+        }
+      ],
+
+      // 写真集・雑誌の名称と内容は制作見本です。
+      media: [
+        {
+          id: "first-photobook",
+          category: "PHOTOBOOK / SAMPLE",
+          title: "写真集『ひかりの途中』",
+          image: "assets/images/media-photobook.jpg",
+          alt: "白鳥サラの写真集紹介用メインビジュアル",
+          caption: "写真集ページの制作見本",
+          description:
+            "ステージとは少し違う、自然な表情を集めた写真集の紹介ページです。\n" +
+            "柔らかな朝の光、静かな街並み、何気ない日常。" +
+            "白鳥サラの素顔を伝える構成を想定しています。\n\n" +
+            "本項目は制作見本です。刊行は確定していません。",
+          facts: [
+            ["区分", "写真集"],
+            ["発売日", "未定"],
+            ["出版社", "未定"],
+            ["掲載状態", "制作見本"]
+          ]
+        },
+        {
+          id: "idol-magazine",
+          category: "MAGAZINE / SAMPLE",
+          title: "アイドル誌 巻頭グラビア",
+          image: "assets/images/media-magazine.jpg",
+          alt: "白鳥サラのアイドル誌グラビア紹介用写真",
+          caption: "雑誌掲載ページの制作見本",
+          description:
+            "デビューシングルに込めた決意を語るインタビューと、" +
+            "撮り下ろしグラビアの掲載ページを想定しています。\n\n" +
+            "誌名・号数・発売日・掲載内容は未確定です。",
+          facts: [
+            ["区分", "雑誌"],
+            ["誌名・号数", "未定"],
+            ["発売日", "未定"],
+            ["掲載状態", "制作見本"]
+          ]
+        }
+      ]
+    };
+
+    const select = (selector, root = document) => {
+      return root.querySelector(selector);
+    };
+
+    const selectAll = (selector, root = document) => {
+      return Array.from(root.querySelectorAll(selector));
+    };
+
+    function element(tag, className, text) {
+      const node = document.createElement(tag);
+
+      if (className) {
+        node.className = className;
+      }
+
+      if (text !== undefined) {
+        node.textContent = text;
+      }
+
+      return node;
+    }
+
+    // 外部サービスを使わず、未配置画像の代替を生成します。
+    function placeholder() {
+      const svg = `
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="1800"
+          height="1200"
+          viewBox="0 0 1800 1200"
+        >
+          <defs>
+            <linearGradient id="background" x2="1" y2="1">
+              <stop offset="0" stop-color="#dce6ec" />
+              <stop offset="1" stop-color="#f8f5ef" />
+            </linearGradient>
+            <radialGradient id="light">
+              <stop offset="0" stop-color="#ffffff" stop-opacity=".9" />
+              <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <rect width="1800" height="1200" fill="url(#background)" />
+          <circle cx="1250" cy="300" r="850" fill="url(#light)" />
+          <path
+            d="M 0 1060 L 1800 600 L 1800 1200 L 0 1200 Z"
+            fill="#ffffff"
+            opacity=".3"
+          />
+          <text
+            x="900"
+            y="565"
+            text-anchor="middle"
+            font-family="sans-serif"
+            font-size="26"
+            letter-spacing="8"
+            fill="#718591"
+          >
+            SARA SHIRATORI
+          </text>
+          <text
+            x="900"
+            y="620"
+            text-anchor="middle"
+            font-family="sans-serif"
+            font-size="17"
+            letter-spacing="4"
+            fill="#8b9ba4"
+          >
+            IMAGE COMING SOON
+          </text>
+        </svg>
+      `;
+
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    const fallbackImage = placeholder();
+
+    function createImage(src, alt, eager = false) {
+      const image = document.createElement("img");
+      image.alt = alt;
+      image.loading = eager ? "eager" : "lazy";
+      image.decoding = "async";
+
+      image.addEventListener(
+        "error",
+        () => {
+          image.src = fallbackImage;
+          image.alt = alt + "（画像準備中）";
+        },
+        { once: true }
+      );
+
+      image.src = src || fallbackImage;
+      return image;
+    }
+
+    const motionPreference = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
+    const sliderState = {
+      index: 0,
+      timer: null,
+      paused: motionPreference.matches,
+      hover: false,
+      focus: false,
+      onHome: true
+    };
+
+    const slideNodes = [];
+    const dotNodes = [];
+
+    function buildSlider() {
+      const frame = select("#hero-frame");
+      const dots = select("#slider-dots");
+
+      content.slides.forEach((slide, index) => {
+        const panel = element("article", "hero-slide");
+        panel.id = "hero-slide-" + index;
+        panel.setAttribute("role", "group");
+        panel.setAttribute("aria-roledescription", "スライド");
+        panel.setAttribute(
+          "aria-label",
+          `${index + 1} / ${content.slides.length}：${slide.title}`
+        );
+
+        const image = createImage(slide.image, slide.alt, index === 0);
+        panel.append(image);
+
+        if (slide.video) {
+          const video = document.createElement("video");
+          video.src = slide.video;
+          video.muted = true;
+          video.defaultMuted = true;
+          video.loop = true;
+          video.playsInline = true;
+          video.preload = "none";
+          video.hidden = true;
+          video.setAttribute("aria-hidden", "true");
+
+          video.addEventListener("error", () => {
+            video.hidden = true;
+            image.hidden = false;
+          });
+
+          panel.append(video);
+        }
+
+        const copy = element("div", "hero-copy");
+        const category = element("p", "eyebrow", slide.category);
+        const title = element("h2", "", slide.title);
+        const link = element("a", "", slide.linkText + " →");
+        link.href = slide.href;
+        copy.append(category, title, link);
+        panel.append(copy);
+        frame.append(panel);
+        slideNodes.push(panel);
+
+        const dot = element("button", "slider-dot");
+        dot.type = "button";
+        dot.setAttribute(
+          "aria-label",
+          `スライド${index + 1}：${slide.title}`
+        );
+        dot.setAttribute("aria-controls", panel.id);
+
+        dot.addEventListener("click", () => {
+          showSlide(index, true);
+        });
+
+        dots.append(dot);
+        dotNodes.push(dot);
+      });
+    }
+
+    function canAnimate() {
+      return (
+        sliderState.onHome &&
+        !sliderState.paused &&
+        !sliderState.hover &&
+        !sliderState.focus &&
+        !document.hidden
+      );
+    }
+
+    function syncVideo() {
+      slideNodes.forEach((panel, index) => {
+        const video = select("video", panel);
+
+        if (!video) {
+          return;
+        }
+
+        const image = select("img", panel);
+        const shouldPlay = index === sliderState.index && canAnimate();
+
+        if (!shouldPlay) {
+          video.pause();
+          return;
+        }
+
+        video.play().then(() => {
+          if (
+            index === sliderState.index &&
+            canAnimate() &&
+            !video.error
+          ) {
+            video.hidden = false;
+            image.hidden = true;
+          } else {
+            video.pause();
+          }
+        }).catch(() => {
+          video.hidden = true;
+          image.hidden = false;
+        });
+      });
+    }
+
+    function scheduleSlide() {
+      window.clearTimeout(sliderState.timer);
+      sliderState.timer = null;
+
+      if (canAnimate() && slideNodes.length > 1) {
+        sliderState.timer = window.setTimeout(() => {
+          showSlide(sliderState.index + 1);
+        }, 6500);
+      }
+
+      select("#slide-toggle").textContent = sliderState.paused
+        ? "自動再生を開始"
+        : "自動再生を停止";
+
+      syncVideo();
+    }
+
+    function showSlide(index, announce = false) {
+      const total = slideNodes.length;
+      sliderState.index = (index + total) % total;
+
+      slideNodes.forEach((panel, panelIndex) => {
+        const active = panelIndex === sliderState.index;
+        panel.classList.toggle("is-active", active);
+        panel.setAttribute("aria-hidden", String(!active));
+        panel.inert = !active;
+        dotNodes[panelIndex].setAttribute(
+          "aria-current",
+          String(active)
+        );
+      });
+
+      if (announce) {
+        const slide = content.slides[sliderState.index];
+        select("#slider-status").textContent =
+          `${sliderState.index + 1} / ${total}：${slide.title}`;
+      }
+
+      scheduleSlide();
+    }
+
+    function buildDiscography() {
+      const grid = select("#discography-grid");
+
+      content.releases.forEach((release) => {
+        const card = element("article", "card disc-card");
+        card.dataset.open = "false";
+
+        const visual = element("div", "disc-visual");
+        const jacket = element("div", "disc-jacket");
+        jacket.append(
+          createImage(release.jacket, release.title + " ジャケット")
+        );
+
+        const preview = element("div", "mv-preview");
+        preview.id = "preview-" + release.id;
+        preview.setAttribute("role", "group");
+        preview.setAttribute("aria-label", release.title + " MVイメージ");
+        preview.setAttribute("aria-hidden", "true");
+
+        release.previews.forEach((item) => {
+          const figure = document.createElement("figure");
+          figure.append(createImage(item.src, item.alt));
+          preview.append(figure);
+        });
+
+        const button = element(
+          "button",
+          "preview-button",
+          "MV PREVIEW"
+        );
+
+        button.type = "button";
+        button.setAttribute("aria-controls", preview.id);
+        button.setAttribute("aria-expanded", "false");
+        button.setAttribute(
+          "aria-label",
+          release.title + "のMVイメージを表示"
+        );
+
+        const state = {
+          hovering: false,
+          pinned: false,
+          dismissed: false
+        };
+
+        function updatePreview() {
+          const open =
+            !state.dismissed &&
+            (state.hovering || state.pinned);
+
+          card.dataset.open = String(open);
+          preview.setAttribute("aria-hidden", String(!open));
+          button.setAttribute("aria-expanded", String(open));
+          button.textContent = open ? "CLOSE ×" : "MV PREVIEW";
+          button.setAttribute(
+            "aria-label",
+            release.title + "のMVイメージを" +
+            (open ? "閉じる" : "表示")
+          );
+        }
+
+        visual.addEventListener("pointerenter", (event) => {
+          if (event.pointerType !== "mouse") {
+            return;
+          }
+
+          state.hovering = true;
+          state.dismissed = false;
+          updatePreview();
+        });
+
+        visual.addEventListener("pointerleave", () => {
+          state.hovering = false;
+          state.dismissed = false;
+          updatePreview();
+        });
+
+        button.addEventListener("click", () => {
+          const open = card.dataset.open === "true";
+
+          if (open) {
+            state.pinned = false;
+            state.dismissed = true;
+          } else {
+            state.pinned = true;
+            state.dismissed = false;
+          }
+
+          updatePreview();
+        });
+
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") {
+            state.pinned = false;
+            state.dismissed = true;
+            updatePreview();
+            button.focus();
+          }
+        });
+
+        visual.append(jacket, preview, button);
+
+        card.append(
+          visual,
+          element("p", "card-meta", release.type),
+          element("h2", "card-title", release.title),
+          element("p", "card-caption", release.note)
+        );
+
+        grid.append(card);
+      });
+    }
+
+    function buildLives() {
+      const grid = select("#live-grid");
+
+      content.lives.forEach((live) => {
+        const card = element("article", "card");
+        const frame = element("div", "image-frame");
+        frame.append(createImage(live.image, live.alt));
+
+        card.append(
+          frame,
+          element("p", "card-meta", live.label),
+          element("h2", "card-title", live.title),
+          element("p", "card-caption", live.caption)
+        );
+
+        grid.append(card);
+      });
+    }
+
+    function buildMedia() {
+      const grid = select("#media-grid");
+
+      content.media.forEach((item) => {
+        const card = element("article", "card");
+        const link = element("a", "media-link");
+        link.href = "#media/" + item.id;
+        link.setAttribute("aria-label", item.title + "の詳細");
+
+        const frame = element("div", "image-frame");
+        frame.append(createImage(item.image, item.alt));
+
+        link.append(
+          frame,
+          element("p", "card-meta", item.category),
+          element("h2", "card-title", item.title),
+          element("p", "card-caption", item.caption)
+        );
+
+        card.append(link);
+        grid.append(card);
+      });
+    }
+
+    function renderMediaDetail(item) {
+      select("#detail-image").replaceChildren(
+        createImage(item.image, item.alt, true)
+      );
+
+      select("#detail-category").textContent = item.category;
+      select("#detail-title").textContent = item.title;
+      select("#detail-description").textContent = item.description;
+
+      const facts = select("#detail-facts");
+      facts.replaceChildren();
+
+      item.facts.forEach(([label, value]) => {
+        facts.append(
+          element("dt", "", label),
+          element("dd", "", value)
+        );
+      });
+    }
+
+    const routeTitles = {
+      home: "Official Website",
+      discography: "Discography",
+      live: "Live",
+      media: "Media",
+      "not-found": "ページが見つかりません"
+    };
+
+    function route(shouldFocus = false) {
+      const hash = window.location.hash.slice(1);
+
+      // スキップリンクは現在のページを変更しません。
+      if (hash === "main-content") {
+        select("#main-content").focus();
+        return;
+      }
+
+      const path = hash || "home";
+      let page = path;
+      let title = routeTitles[path];
+
+      if (path.startsWith("media/")) {
+        const id = path.slice("media/".length);
+        const item = content.media.find((entry) => entry.id === id);
+
+        if (item) {
+          renderMediaDetail(item);
+          page = "media-detail";
+          title = item.title;
+        } else {
+          page = "not-found";
+          title = routeTitles["not-found"];
+        }
+      } else if (!Object.hasOwn(routeTitles, path)) {
+        page = "not-found";
+        title = routeTitles["not-found"];
+      }
+
+      selectAll("[data-page]").forEach((section) => {
+        section.hidden = section.dataset.page !== page;
+      });
+
+      const activeNav = page === "media-detail" ? "media" : page;
+
+      selectAll("[data-nav]").forEach((link) => {
+        if (link.dataset.nav === activeNav) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
+
+      sliderState.onHome = page === "home";
+      document.title = `白鳥サラ | ${title}`;
+      scheduleSlide();
+
+      if (shouldFocus) {
+        window.scrollTo({
+          top: 0,
+          behavior: "instant"
+        });
+
+        select("#main-content").focus({
+          preventScroll: true
+        });
+      }
+    }
+
+    buildSlider();
+    buildDiscography();
+    buildLives();
+    buildMedia();
+
+    select("#slide-prev").addEventListener("click", () => {
+      showSlide(sliderState.index - 1, true);
+    });
+
+    select("#slide-next").addEventListener("click", () => {
+      showSlide(sliderState.index + 1, true);
+    });
+
+    select("#slide-toggle").addEventListener("click", () => {
+      sliderState.paused = !sliderState.paused;
+      scheduleSlide();
+    });
+
+    select("#hero").addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "mouse") {
+        sliderState.hover = true;
+        scheduleSlide();
+      }
+    });
+
+    select("#hero").addEventListener("pointerleave", () => {
+      sliderState.hover = false;
+      scheduleSlide();
+    });
+
+    select("#hero").addEventListener("focusin", () => {
+      sliderState.focus = true;
+      scheduleSlide();
+    });
+
+    select("#hero").addEventListener("focusout", () => {
+      window.setTimeout(() => {
+        sliderState.focus = select("#hero").contains(
+          document.activeElement
+        );
+        scheduleSlide();
+      }, 0);
+    });
+
+    document.addEventListener("visibilitychange", scheduleSlide);
+
+    motionPreference.addEventListener("change", (event) => {
+      if (event.matches) {
+        sliderState.paused = true;
+        scheduleSlide();
+      }
+    });
+
+    window.addEventListener("hashchange", () => {
+      route(true);
+    });
+
+    showSlide(0);
+    route();
+  </script>
+</body>
+</html>
